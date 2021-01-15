@@ -1,0 +1,8 @@
+.pie-yum {
+  margin: 1.5em;
+}
+
+.pie {
+  transform: rotate(-90deg);
+  border-radius: 50%;
+}
