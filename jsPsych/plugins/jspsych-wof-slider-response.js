@@ -86,7 +86,7 @@ jsPsych.plugins['wof-slider-response'] = (function() {
     var half_thumb_width = 7.5;
     // var slider_html = '<div class="jspsych-html-slider-response-container" style="position:relative; margin: 0 auto 3em auto; width:500px; height: 150px">';
     var slider_html = '<input type="range" class="jspsych-slider" value="'+trial.slider_start+'" min="'+trial.min+'" max="'+trial.max+'" step="'+trial.step+'" id="jspsych-html-slider-response-response"></input>';
-    slider_html += '<div>'
+    slider_html += '<div style="margin-bottom: 25px">'
     for(var j=0; j < trial.labels.length; j++){
       var label_width_perc = 100/(trial.labels.length-1);
       var percent_of_range = j * (100/(trial.labels.length - 1));

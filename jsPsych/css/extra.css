@@ -14,16 +14,19 @@
 .value{
   position: absolute;
   height: 30px;
-  width: 40px;
+  width: 35px;
   text-align: center;
+  font-size: 15px;
 }
 
+/* value 1 is the value that you get to first moving clockwise so the label is on the right*/
 .value1{
-  left: 20px;
-  border: solid 3px blue;
-}
-
-.value2{
   right: 20px;
   border: solid 3px yellow;
+}
+
+/* value 2 is the value that you get to second moving clockwise so the label is on the left*/
+.value2{
+  left: 20px;
+  border: solid 3px blue;
 }

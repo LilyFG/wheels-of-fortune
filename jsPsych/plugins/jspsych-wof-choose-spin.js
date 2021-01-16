@@ -73,7 +73,7 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
   }
 
   plugin.trial = function(display_element, trial) {
-        console.log(trial.trial_type)
+
 
         // display stimulus
         var html = '<div id="jspsych-prompt">'+trial.prompt+'</div>';
@@ -85,14 +85,14 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
                 '<div class="value value1" id="left_val_1">'+trial.left_value_1+'</div>'+
                 '<div class="value value2" id="left_val_2">'+trial.left_value_2+'</div>'+
                 '<div class="pie-yum" id="wheel0" style="position: relative">' +
-                '<svg class="pie" id="spinner0" width="300px" height="300px" viewBox="0 0 32 32">' +
+                '<svg class="pie" id="spinner0" width="250px" height="250px" viewBox="0 0 32 32">' +
                 '<circle r="16" cx="16" cy="16" fill="blue" stroke="yellow" stroke-width="32" stroke-dasharray="' + trial.left_prob_1 * 100 + ' 100" />' +
                 '</div></div>',
                 '<div style="position:relative; margin: 20px;">'+
                 '<div class="value value1" id="right_val_1">'+trial.right_value_1+'</div>'+
                 '<div class="value  value2" id="right_val_2">'+trial.right_value_2+'</div>'+
                 '<div class="pie-yum" id="wheel1" style="position: relative">' +
-                '<svg class="pie" id="spinner1" width="300px" height="300px" viewBox="0 0 32 32">' +
+                '<svg class="pie" id="spinner1" width="250px" height="250px" viewBox="0 0 32 32">' +
                 '<circle r="16" cx="16" cy="16" fill="blue" stroke="yellow" stroke-width="32" stroke-dasharray="' + trial.right_prob_1 * 100 + ' 100" />' +
                 '</div></div>']
         for (var i = 0; i < 2; i++) {
@@ -146,14 +146,16 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
             btns[i].setAttribute('disabled', 'disabled');
           }
 
+          console.log("left outcome value: "+trial["left_value_"+trial.left_outcome])
+          console.log("right outcome value: "+trial["right_value_"+trial.right_outcome])
           // spin the wheels
           setTimeout(function(){
             document.getElementById('wheel'+choice).innerHTML += arrow[choice];
             // draw the arrow using snap.svg
             var s1 = Snap("#arrow"+choice);
-            var c1 = s1.circle(150, 150, 5);
-            var g1 = s1.group(s1.line(150, 50, 150, 150).attr({stroke: "#000", strokeWidth: 2}),
-                            s1.polyline([150, 50, 140, 60, 160, 60]))
+            var c1 = s1.circle(125, 125, 5);
+            var g1 = s1.group(s1.line(125, 50, 125, 125).attr({stroke: "#000", strokeWidth: 2}),
+                            s1.polyline([125, 50, 120, 60, 130, 60]))
             // random rotation value
             var rotate1 = Math.random() * 360 * [trial[["left","right"][choice]+"_prob_1"], 1-trial[["left","right"][choice]+"_prob_1"]][+(trial[["left","right"][choice]+"_outcome"]==2)];
             if(trial[["left","right"][choice]+"_outcome"]==2){
@@ -161,17 +163,13 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
             }
 
             if(trial.trial_type=="complete"){
-              console.log(choice)
-              console.log(typeof(choice));
-              console.log(!choice)
-              console.log('wheel'+(+!choice))
               document.getElementById('wheel'+(+!choice)).innerHTML += arrow[+!choice];
 
               // draw the arrow using snap.svg
               var s2 = Snap("#arrow"+(+!choice));
-              var c2 = s2.circle(150, 150, 5);
-              var g2 = s2.group(s2.line(150, 50, 150, 150).attr({stroke: "#000", strokeWidth: 2}),
-                              s2.polyline([150, 50, 140, 60, 160, 60]))
+              var c2 = s2.circle(125, 125, 5);
+              var g2 = s2.group(s2.line(125, 50, 125, 125).attr({stroke: "#000", strokeWidth: 2}),
+                              s2.polyline([125, 50, 120, 60, 130, 60]))
               // random rotation value
               var rotate2 = Math.random() * 360 * [trial[["left","right"][+!choice]+"_prob_1"], 1-trial[["left","right"][+!choice]+"_prob_1"]][+(trial[["left","right"][+!choice]+"_outcome"]==2)];
               if(trial[["left","right"][+!choice]+"_outcome"]==2){
@@ -180,9 +178,9 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
             }
 
             // animate the rotation and display the outcome
-            g1.animate({ transform: 'r'+(360+rotate1)+',150,150'}, 1000, mina.easeinout, end_trial)
+            g1.animate({ transform: 'r'+(360+rotate1)+',125,125'}, 1000, mina.easeinout, end_trial)
             if(trial.trial_type=="complete"){
-              g2.animate({ transform: 'r'+(360+rotate2)+',150,150'}, 1000, mina.easeinout)
+              g2.animate({ transform: 'r'+(360+rotate2)+',125,125'}, 1000, mina.easeinout)
             }
           }, 500)
 
