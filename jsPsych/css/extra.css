@@ -1,3 +1,4 @@
+/* styles fpr the wheels themselves */
 .pie-yum {
   margin: 1.5em;
 }
@@ -7,10 +8,7 @@
   border-radius: 50%;
 }
 
-.selected {
-  border: solid 3px black;
-}
-
+/* style for the value labels for the wheels */
 .value{
   position: absolute;
   height: 30px;
