@@ -146,9 +146,11 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
             btns[i].setAttribute('disabled', 'disabled');
           }
 
-          console.log("left outcome value: "+trial["left_value_"+trial.left_outcome])
-          console.log("right outcome value: "+trial["right_value_"+trial.right_outcome])
-          // spin the wheels
+          // change the prompt text
+          document.getElementById('jspsych-prompt').innerHTML = "Watch the spinners"
+
+
+          // spin the wheels after 500ms
           setTimeout(function(){
             document.getElementById('wheel'+choice).innerHTML += arrow[choice];
             // draw the arrow using snap.svg
