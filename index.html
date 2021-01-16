@@ -71,7 +71,11 @@
   var test_procedure = {
     timeline: [trial, slider],
     timeline_variables: trial_list,
-    randomize_order: true
+    randomize_order: true,
+    sample: {
+        type: 'without-replacement',
+        size: 5, // sample 5 trials, without replacement
+    }
   }
   timeline.push(test_procedure);
 
@@ -80,7 +84,8 @@
   jsPsych.init({
     timeline: timeline,
     on_finish: function() {
-      jsPsych.data.displayData();
+      //jsPsych.data.displayData();
+      jsPsych.data.get().localSave('csv','wheels_data.csv');
     }
   });
 </script>
