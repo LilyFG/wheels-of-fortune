@@ -205,10 +205,11 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
             "unchosen_arrow_stop_angle": rotate2,
           };
 
-
+          // use jQuery's .extend to combine the trial data with the trial input settings so everything is recorded
           $.extend(trial_data, trial_data, trial);
 
           // clear the display
+          // the display is not cleared so the sliders can just be added in the next trial
           //display_element.innerHTML = '';
 
           // move on to the next trial

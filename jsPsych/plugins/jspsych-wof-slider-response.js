@@ -84,11 +84,9 @@ jsPsych.plugins['wof-slider-response'] = (function() {
     // change the prompt text
     document.getElementById('jspsych-prompt').innerHTML = trial.prompt
 
-
-
-
     // half of the thumb width value from jspsych.css, used to adjust the label positions
     var half_thumb_width = 7.5;
+
     // var slider_html = '<div class="jspsych-html-slider-response-container" style="position:relative; margin: 0 auto 3em auto; width:500px; height: 150px">';
     var slider_html = '<input type="range" class="jspsych-slider" value="'+trial.slider_start+'" min="'+trial.min+'" max="'+trial.max+'" step="'+trial.step+'" id="jspsych-html-slider-response-response"></input>';
     slider_html += '<div style="margin-bottom: 25px">'
@@ -110,6 +108,7 @@ jsPsych.plugins['wof-slider-response'] = (function() {
     // add submit button
     slider_html += '<button id="jspsych-html-slider-response-next" class="jspsych-btn" '+ (trial.require_movement ? "disabled" : "") + '>'+trial.button_label+'</button>';
 
+    // instead of replacing the whole display element, we just update the slider container (previously an empty div)
     document.getElementById('wof-slider').innerHTML = slider_html;
 
     var response = {
@@ -148,6 +147,10 @@ jsPsych.plugins['wof-slider-response'] = (function() {
         "response": response.response
       };
 
+      // use jQuery's .extend to combine the trial data with the trial input settings so everything is recorded
+      $.extend(trial_data, trial_data, trial);
+
+      // clear the display - if multiple sliders consecutively then we want to have this conditional on a trial variable
       display_element.innerHTML = '';
 
       // next trial
