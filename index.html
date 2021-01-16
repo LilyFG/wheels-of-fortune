@@ -7,7 +7,8 @@
   <script src="jsPsych/plugins/jspsych-html-keyboard-response.js"></script>
   <script src="jsPsych/plugins/jspsych-html-button-response.js"></script>
   <script src="jsPsych/plugins/jspsych-image-keyboard-response.js"></script>
-  <script src="jsPsych/plugins/jspsych-wof.js"></script>
+  <script src="jsPsych/plugins/jspsych-wof-choose-spin.js"></script>
+  <script src="jsPsych/plugins/jspsych-wof-slider-response.js"></script>
   <script src="jsPsych/snap.svg.js"></script>
   <script src="PapaParse/papaparse.js"></script>
   <script src="trial_list.js"></script>
@@ -46,7 +47,7 @@
   // Example trial variables
 
   var trial = {
-    type: 'wof',
+    type: 'wof-choose-spin',
     trial_type: jsPsych.timelineVariable('trial_type'),
     left_value_1: jsPsych.timelineVariable('left_value_1'),
     left_value_2: jsPsych.timelineVariable('left_value_2'),
@@ -57,7 +58,15 @@
     right_value_2: jsPsych.timelineVariable('right_value_2'),
     right_prob_1: jsPsych.timelineVariable('right_prob_1'),
     right_outcome: jsPsych.timelineVariable('right_outcome'),
+    post_trial_gap: 1000
   }
+
+  var slider = {
+    type: 'wof-slider-response',
+    labels: ['very sad', 'very happy']
+  }
+
+
 
   var choice = {
     type: 'html-keyboard-response',
@@ -120,7 +129,7 @@
 
 
   var test_procedure = {
-    timeline: [trial],
+    timeline: [trial, slider],
     timeline_variables: trial_list,
     randomize_order: true
   }

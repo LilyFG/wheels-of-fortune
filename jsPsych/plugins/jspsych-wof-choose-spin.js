@@ -1,13 +1,17 @@
-/*
- * Example plugin template
+/**
+ * jspsych-wof-choose-spin
+ * a jspsych plugin for wheels of fortune wheel choice and spinner
+ *
+ * Lily FitzGibbon
+ *
  */
 
-jsPsych.plugins["wof"] = (function() {
+jsPsych.plugins["wof-choose-spin"] = (function() {
 
   var plugin = {};
 
   plugin.info = {
-    name: "wof",
+    name: "wof-choose-spin",
     parameters: {
       prompt: {
         type: jsPsych.plugins.parameterType.STRING, // BOOL, STRING, INT, FLOAT, FUNCTION, KEYCODE, SELECT, HTML_STRING, IMAGE, AUDIO, VIDEO, OBJECT, COMPLEX
@@ -93,9 +97,12 @@ jsPsych.plugins["wof"] = (function() {
                 '</div></div>']
         for (var i = 0; i < 2; i++) {
           var str = buttons[i];
-          html += '<div class="jspsych-html-button-response-button" style="display: inline-block; border: solid 3px white;" id="jspsych-html-button-response-button-' + i +'" data-choice="'+i+'">'+str+'</div>';
+          html += '<div class="wheels" style="display: inline-block; border: solid 3px white;" id="wheel-container-' + i +'" data-choice="'+i+'">'+str+'</div>';
         }
         html += '</div>';
+
+        html += '<div class="jspsych-html-slider-response-container" id="wof-slider" style="position:relative; margin: 50px auto 10px auto; width:500px; height: 150px"></div>';
+
 
         display_element.innerHTML = html;
 
@@ -105,13 +112,13 @@ jsPsych.plugins["wof"] = (function() {
         var click_fun = function(e){
           var choice = parseInt(e.currentTarget.getAttribute('data-choice')); // don't use dataset for jsdom compatibility
           console.log(e.currentTarget);
-          e.currentTarget.classList.add("selected");
+          e.currentTarget.style.borderColor = "black";
           after_response(choice);
         }
 
         // add event listeners to buttons
         for (var i = 0; i < 2; i++) {
-          display_element.querySelector('#jspsych-html-button-response-button-' + i).addEventListener('click', click_fun);
+          display_element.querySelector('#wheel-container-' + i).addEventListener('click', click_fun);
         }
 
         // store response
@@ -133,7 +140,7 @@ jsPsych.plugins["wof"] = (function() {
           // display_element.querySelector('#jspsych-html-button-response-stimulus').className += ' responded';
 
           // disable all the buttons after a response
-          var btns = document.querySelectorAll('.jspsych-html-button-response-button');
+          var btns = document.querySelectorAll('.wheels');
           for(var i=0; i<btns.length; i++){
             btns[i].removeEventListener('click', click_fun);
             btns[i].setAttribute('disabled', 'disabled');
@@ -200,7 +207,7 @@ jsPsych.plugins["wof"] = (function() {
           $.extend(trial_data, trial_data, trial);
 
           // clear the display
-          display_element.innerHTML = '';
+          //display_element.innerHTML = '';
 
           // move on to the next trial
           jsPsych.finishTrial(trial_data);
