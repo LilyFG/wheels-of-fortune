@@ -200,7 +200,9 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
           // gather the data to store for the trial
           var trial_data = {
             "rt": response.rt,
-            "button_pressed": response.button
+            "button_pressed": response.button,
+            "chosen_arrow_stop_angle": rotate1,
+            "unchosen_arrow_stop_angle": rotate2,
           };
 
 
