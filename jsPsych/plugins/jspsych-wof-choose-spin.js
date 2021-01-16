@@ -76,7 +76,7 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
 
 
         // display stimulus
-        var html = '<div id="jspsych-prompt">'+trial.prompt+'</div>';
+        var html = '<div id="jspsych-prompt" style="margin-bottom: 20px;">'+trial.prompt+'</div>';
 
         html += '<div id="jspsych-wheels-choice">'
 

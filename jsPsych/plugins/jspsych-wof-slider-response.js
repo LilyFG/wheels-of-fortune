@@ -62,8 +62,8 @@ jsPsych.plugins['wof-slider-response'] = (function() {
       prompt: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Prompt',
-        default: null,
-        description: 'Any content here will be displayed below the slider.'
+        default: 'Rate how you feel',
+        description: 'Text for the prompt at the top of the screen.'
       },
       trial_duration: {
         type: jsPsych.plugins.parameterType.INT,
@@ -81,6 +81,11 @@ jsPsych.plugins['wof-slider-response'] = (function() {
   }
 
   plugin.trial = function(display_element, trial) {
+    // change the prompt text
+    document.getElementById('jspsych-prompt').innerHTML = trial.prompt
+
+
+
 
     // half of the thumb width value from jspsych.css, used to adjust the label positions
     var half_thumb_width = 7.5;
@@ -101,9 +106,6 @@ jsPsych.plugins['wof-slider-response'] = (function() {
     slider_html += '</div>';
     slider_html += '</div>';
 
-    if (trial.prompt !== null){
-      slider_html += trial.prompt;
-    }
 
     // add submit button
     slider_html += '<button id="jspsych-html-slider-response-next" class="jspsych-btn" '+ (trial.require_movement ? "disabled" : "") + '>'+trial.button_label+'</button>';
