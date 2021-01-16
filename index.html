@@ -7,8 +7,11 @@
   <script src="jsPsych/plugins/jspsych-html-keyboard-response.js"></script>
   <script src="jsPsych/plugins/jspsych-html-button-response.js"></script>
   <script src="jsPsych/plugins/jspsych-image-keyboard-response.js"></script>
+  <script src="jsPsych/plugins/jspsych-wof.js"></script>
   <script src="jsPsych/snap.svg.js"></script>
   <script src="PapaParse/papaparse.js"></script>
+  <script src="trial_list.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" href="jsPsych/css/jspsych.css">
   <link rel="stylesheet" href="jsPsych/css/extra.css">
 </head>
@@ -19,7 +22,8 @@
   var timeline = [];
 
   // arrow code
-  var arrow = '<svg id="arrow" height = "300px" width = "300px" style="position: absolute; top:0; left:0;"></svg>'
+  var arrow = ['<svg id="arrow0" height = "300px" width = "300px" style="position: absolute; top:0; left:0;"></svg>',
+              '<svg id="arrow1" height = "300px" width = "300px" style="position: absolute; top:0; left:0;"></svg>']
 
   // variable to hold button pressed on each trial
   var button_pressed
@@ -29,7 +33,7 @@
     type: "html-keyboard-response",
     stimulus: "Welcome to the experiment. Press any key to begin."
   };
-  timeline.push(welcome_block);
+  //timeline.push(welcome_block);
 
   /* define instructions trial */
   var instructions = {
@@ -37,55 +41,22 @@
     stimulus: "<p>Instructions go here.</p>",
     post_trial_gap: 500
   };
-  timeline.push(instructions);
+  //timeline.push(instructions);
 
   // Example trial variables
-  var trial_vars = [{
-      "trial_id": 1,
-      "val_a1": 50,
-      "val_a2": 200,
-      "val_b1": -50,
-      "val_b2": 200,
-      "prop_a1": 0.8,
-      "prop_b1": 0.2,
-      "near_miss": true,
-      "feedback": "complete"
-    },
-    {
-      "trial_id": 2,
-      "val_a1": -50,
-      "val_a2": 50,
-      "val_b1": -200,
-      "val_b2": 50,
-      "prop_a1": 0.5,
-      "prop_b1": 0.5,
-      "near_miss": false,
-      "feedback": "partial"
-    }
-  ]
-
 
   var trial = {
-    type: 'html-button-response',
-    stimulus: 'Choose a gamble',
-    choices: ["a", "b"],
-    button_html: function() {
-      return [
-        '<div class="pie-yum" style="position: relative">' +
-        '<svg class="pie" id="spinner0" width="300px" height="300px" viewBox="0 0 32 32">' +
-        '<circle r="16" cx="16" cy="16" fill="blue" stroke="yellow" stroke-width="32" stroke-dasharray="' + jsPsych.timelineVariable('prop_a1', true) * 100 + ' 100" />' +
-        '</div>',
-        '<div class="pie-yum" style="position: relative">' +
-        '<svg class="pie" id="spinner1" width="300px" height="300px" viewBox="0 0 32 32">' +
-        '<circle r="16" cx="16" cy="16" fill="blue" stroke="yellow" stroke-width="32" stroke-dasharray="' + jsPsych.timelineVariable('prop_b1', true) * 100 + ' 100" />' +
-        '</div>'
-      ]
-    },
-    on_finish: function(data){
-      // set button pressed to equal the pressed button on this trial = 0 is left, 1 is right
-      button_pressed = data.button_pressed
-      console.log(1-button_pressed);
-    }
+    type: 'wof',
+    trial_type: jsPsych.timelineVariable('trial_type'),
+    left_value_1: jsPsych.timelineVariable('left_value_1'),
+    left_value_2: jsPsych.timelineVariable('left_value_2'),
+    left_prob_1: jsPsych.timelineVariable('left_prob_1'),
+    left_outcome: jsPsych.timelineVariable('left_outcome'),
+    trial_type: jsPsych.timelineVariable('trial_type'),
+    right_value_1: jsPsych.timelineVariable('right_value_1'),
+    right_value_2: jsPsych.timelineVariable('right_value_2'),
+    right_prob_1: jsPsych.timelineVariable('right_prob_1'),
+    right_outcome: jsPsych.timelineVariable('right_outcome'),
   }
 
   var choice = {
@@ -149,9 +120,8 @@
 
 
   var test_procedure = {
-    timeline: [trial, choice, spin],
-    timeline_variables: trial_vars,
-    repetitions: 5,
+    timeline: [trial],
+    timeline_variables: trial_list,
     randomize_order: true
   }
   timeline.push(test_procedure);

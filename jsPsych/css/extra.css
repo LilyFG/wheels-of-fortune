@@ -6,3 +6,24 @@
   transform: rotate(-90deg);
   border-radius: 50%;
 }
+
+.selected {
+  border: solid 3px black;
+}
+
+.value{
+  position: absolute;
+  height: 30px;
+  width: 40px;
+  text-align: center;
+}
+
+.value1{
+  left: 20px;
+  border: solid 3px blue;
+}
+
+.value2{
+  right: 20px;
+  border: solid 3px yellow;
+}
