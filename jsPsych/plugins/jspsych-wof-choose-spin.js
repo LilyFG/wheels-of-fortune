@@ -126,6 +126,10 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
           rt: null,
           button: null
         };
+    
+        // store rotation angles
+        var rotate1 = null;
+        var rotate2 = null;
 
         // function to handle responses by the subject
         function after_response(choice) {
@@ -159,7 +163,7 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
             var g1 = s1.group(s1.line(125, 50, 125, 125).attr({stroke: "#000", strokeWidth: 2}),
                             s1.polyline([125, 50, 120, 60, 130, 60]))
             // random rotation value
-            var rotate1 = Math.random() * 360 * [trial[["left","right"][choice]+"_prob_1"], 1-trial[["left","right"][choice]+"_prob_1"]][+(trial[["left","right"][choice]+"_outcome"]==2)];
+            rotate1 = Math.random() * 360 * [trial[["left","right"][choice]+"_prob_1"], 1-trial[["left","right"][choice]+"_prob_1"]][+(trial[["left","right"][choice]+"_outcome"]==2)];
             if(trial[["left","right"][choice]+"_outcome"]==2){
               rotate1 += 360*trial[["left","right"][choice]+"_prob_1"]
             }
@@ -173,7 +177,7 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
               var g2 = s2.group(s2.line(125, 50, 125, 125).attr({stroke: "#000", strokeWidth: 2}),
                               s2.polyline([125, 50, 120, 60, 130, 60]))
               // random rotation value
-              var rotate2 = Math.random() * 360 * [trial[["left","right"][+!choice]+"_prob_1"], 1-trial[["left","right"][+!choice]+"_prob_1"]][+(trial[["left","right"][+!choice]+"_outcome"]==2)];
+              rotate2 = Math.random() * 360 * [trial[["left","right"][+!choice]+"_prob_1"], 1-trial[["left","right"][+!choice]+"_prob_1"]][+(trial[["left","right"][+!choice]+"_outcome"]==2)];
               if(trial[["left","right"][+!choice]+"_outcome"]==2){
                 rotate2 += 360*trial[["left","right"][+!choice]+"_prob_1"]
               }
