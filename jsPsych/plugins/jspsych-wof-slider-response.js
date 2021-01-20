@@ -77,6 +77,12 @@ jsPsych.plugins['wof-slider-response'] = (function() {
         default: true,
         description: 'If true, trial will end when user makes a response.'
       },
+      clear_screen: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: "Clear the screen after the trial",
+        default: true,
+        description: "If true, the screen is cleared after the response, if false, only the slider is removed."
+      },
     }
   }
 
@@ -151,8 +157,12 @@ jsPsych.plugins['wof-slider-response'] = (function() {
       $.extend(trial_data, trial_data, trial);
 
       // clear the display - if multiple sliders consecutively then we want to have this conditional on a trial variable
-      display_element.innerHTML = '';
-
+      if(trial.clear){
+        display_element.innerHTML = '';
+      }else{
+        document.getElementById('wof-slider').innerHTML = "";
+      }
+        
       // next trial
       jsPsych.finishTrial(trialdata);
     }
