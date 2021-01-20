@@ -61,15 +61,24 @@
     post_trial_gap: 1000
   }
 
-  var slider = {
+  var slider_happy = {
     type: 'wof-slider-response',
-    labels: ['very sad', 'very happy'],
+    labels: ['not at all happy', 'very happy'],
+    clear_screen: false,
+    post_trial_gap: 1000
+  }
+  
+  
+  var slider_sad = {
+    type: 'wof-slider-response',
+    labels: ['not at all sad', 'very sad'],
+    clear_screen: true,
     post_trial_gap: 1000
   }
 
 
   var test_procedure = {
-    timeline: [trial, slider],
+    timeline: [trial, slider_happy, slider_sad],
     timeline_variables: trial_list,
     randomize_order: true,
     sample: {
