@@ -147,7 +147,7 @@ jsPsych.plugins['wof-slider-response'] = (function() {
       jsPsych.pluginAPI.clearAllTimeouts();
 
       // save data
-      var trialdata = {
+      var trial_data = {
         "rt": response.rt,
         "slider_start": trial.slider_start,
         "response": response.response
@@ -164,7 +164,7 @@ jsPsych.plugins['wof-slider-response'] = (function() {
       }
         
       // next trial
-      jsPsych.finishTrial(trialdata);
+      jsPsych.finishTrial(trial_data);
     }
 
 
