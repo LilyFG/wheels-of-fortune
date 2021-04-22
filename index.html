@@ -7,11 +7,12 @@
   <script src="jsPsych/plugins/jspsych-html-keyboard-response.js"></script>
   <script src="jsPsych/plugins/jspsych-html-button-response.js"></script>
   <script src="jsPsych/plugins/jspsych-image-keyboard-response.js"></script>
+  <script src="jsPsych/plugins/jspsych-wof-choose-spin-wm.js"></script>
   <script src="jsPsych/plugins/jspsych-wof-choose-spin.js"></script>
-  <script src="jsPsych/plugins/jspsych-wof-slider-response.js"></script>
+  <script src="jsPsych/plugins/jspsych-html-slider-response.js"></script>
   <script src="jsPsych/snap.svg.js"></script>
-  <script src="PapaParse/papaparse.js"></script>
   <script src="trial_list.js"></script>
+  <script src="prac_list.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" href="jsPsych/css/jspsych.css">
   <link rel="stylesheet" href="jsPsych/css/extra.css">
@@ -26,8 +27,17 @@
   var arrow = ['<svg id="arrow0" height = "300px" width = "300px" style="position: absolute; top:0; left:0;"></svg>',
               '<svg id="arrow1" height = "300px" width = "300px" style="position: absolute; top:0; left:0;"></svg>']
 
-  // variable to hold button pressed on each trial
-  var button_pressed
+  // variables to hold trial information over parts of trial
+  var button_pressed;
+  var wm_string;
+  var tested_pos;
+  var tested_digit;
+
+  // order
+  var order = 0 //low first = 0; high first = 1;
+
+  // number of trials in each block
+  var Ntrials = 5
 
   /* define welcome message trial */
   var welcome_block = {
@@ -46,7 +56,7 @@
 
   // Example trial variables
 
-  var trial = {
+  var prac_1 = {
     type: 'wof-choose-spin',
     trial_type: jsPsych.timelineVariable('trial_type'),
     left_value_1: jsPsych.timelineVariable('left_value_1'),
@@ -61,33 +71,92 @@
     post_trial_gap: 1000
   }
 
-  var slider_happy = {
-    type: 'wof-slider-response',
-    labels: ['not at all happy', 'very happy'],
-    clear_screen: false,
-    post_trial_gap: 1000
-  }
-  
-  
-  var slider_sad = {
-    type: 'wof-slider-response',
-    labels: ['not at all sad', 'very sad'],
-    clear_screen: true,
+
+  var low_load_trials = {
+    type: 'wof-choose-spin-wm',
+    trial_type: jsPsych.timelineVariable('trial_type'),
+    left_value_1: jsPsych.timelineVariable('left_value_1'),
+    left_value_2: jsPsych.timelineVariable('left_value_2'),
+    left_prob_1: jsPsych.timelineVariable('left_prob_1'),
+    left_outcome: jsPsych.timelineVariable('left_outcome'),
+    trial_type: jsPsych.timelineVariable('trial_type'),
+    right_value_1: jsPsych.timelineVariable('right_value_1'),
+    right_value_2: jsPsych.timelineVariable('right_value_2'),
+    right_prob_1: jsPsych.timelineVariable('right_prob_1'),
+    right_outcome: jsPsych.timelineVariable('right_outcome'),
+    load: 2,
     post_trial_gap: 1000
   }
 
+  var high_load_trials = {
+    type: 'wof-choose-spin-wm',
+    trial_type: jsPsych.timelineVariable('trial_type'),
+    left_value_1: jsPsych.timelineVariable('left_value_1'),
+    left_value_2: jsPsych.timelineVariable('left_value_2'),
+    left_prob_1: jsPsych.timelineVariable('left_prob_1'),
+    left_outcome: jsPsych.timelineVariable('left_outcome'),
+    trial_type: jsPsych.timelineVariable('trial_type'),
+    right_value_1: jsPsych.timelineVariable('right_value_1'),
+    right_value_2: jsPsych.timelineVariable('right_value_2'),
+    right_prob_1: jsPsych.timelineVariable('right_prob_1'),
+    right_outcome: jsPsych.timelineVariable('right_outcome'),
+    load_time: 2000,
+    outcome_time: 2000,
+    load: 5,
+    post_trial_gap: 500
+  }
 
-  var test_procedure = {
-    timeline: [trial, slider_happy, slider_sad],
+  var slider_emo = {
+    type: 'html-slider-response',
+    stimulus: 'Now rate how you feel about the outcome',
+    labels: ['very sad', 'very happy'],
+    post_trial_gap: 500
+  }
+
+  var memory_test = {
+    type: 'html-keyboard-response',
+    stimulus: function(){
+      wm_string = JSON.parse(jsPsych.data.get().last(2).values()[0].wm_string)
+      tested_pos = jsPsych.randomization.sampleWithoutReplacement([[0],[0,1,2,3]][+(wm_string.length==5)], 1)[0]
+      var tested_digit = wm_string[tested_pos]
+      console.log(tested_digit)
+      return "What was the digit to the right of " + tested_digit
+    },
+    on_finish: function(data){
+      data.tested_pos = tested_pos
+      data.correct_response = wm_string[tested_pos+1]
+      if(jsPsych.pluginAPI.compareKeys(data.key_press, data.correct_response.toString())){
+        data.correct = true;
+      } else {
+        data.correct = false;
+      }
+    }
+  }
+
+  var high_block = {
+    timeline: [high_load_trials, slider_emo, memory_test],
     timeline_variables: trial_list,
     randomize_order: true,
     sample: {
         type: 'without-replacement',
-        size: 5, // sample 5 trials, without replacement
+        size: Ntrials, // sample 5 trials, without replacement
     }
   }
-  timeline.push(test_procedure);
 
+  var low_block = {
+    timeline: [high_load_trials, slider_emo, memory_test],
+    timeline_variables: trial_list,
+    randomize_order: true,
+    sample: {
+        type: 'without-replacement',
+        size: Ntrials, // sample 5 trials, without replacement
+    }
+  }
+
+  // push the two blocks, order depends on condition
+  timeline.push([high_block, low_block][order]);
+
+  timeline.push([high_block, low_block][+!order]);
 
   /* start the experiment */
   jsPsych.init({
