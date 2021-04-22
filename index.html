@@ -12,6 +12,7 @@
   <script src="jsPsych/snap.svg.js"></script>
   <script src="PapaParse/papaparse.js"></script>
   <script src="trial_list.js"></script>
+  <script src="prac_list.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" href="jsPsych/css/jspsych.css">
   <link rel="stylesheet" href="jsPsych/css/extra.css">
@@ -39,7 +40,7 @@
   /* define instructions trial */
   var instructions = {
     type: "html-keyboard-response",
-    stimulus: "<p>In this game, you are trying to win as many points as possible. You get to choose between two wheels of fortune. After you choose a wheel, you'll see an arrow spinning. When the spinning arrow stops, points will be added or subtracted from your running total. You will then be asked to record how you feel about the outcome.</p>",
+    stimulus: "<p>In this game, you are trying to win as many points as possible. You get to choose between two wheels of fortune. After you choose a wheel, you'll see an arrow spinning.When the spinning arrow stops, points will be added or subtracted from your running total. You will then be asked to record how you feel about the outcome. Press any key to continue.</p>",
     post_trial_gap: 500
   };
   //timeline.push(instructions);
@@ -104,10 +105,19 @@
     post_trial_gap: 1000
   }
 
-
+  var prac_procedure = {
+    timeline: [welcome_block, instructions, trial, slider_happy, slider_sad, slider_relieved, slider_regretful, slider_satisfied, slider_disappointed],
+    timeline_variables: prac_list,
+    randomize_order: true,
+    sample: {
+        type: 'without-replacement',
+        size: 5, // sample 5 trials, without replacement
+    }
+  }
+  timeline.push(prac_procedure);
 
   var test_procedure = {
-    timeline: [trial, slider_happy, slider_sad, slider_relieved, slider_regretful, slider_satisfied, slider_disappointed],
+    timeline: [welcome_block, instructions, trial, slider_happy, slider_sad, slider_relieved, slider_regretful, slider_satisfied, slider_disappointed],
     timeline_variables: trial_list,
     randomize_order: true,
     sample: {
