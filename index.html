@@ -39,7 +39,7 @@
   /* define instructions trial */
   var instructions = {
     type: "html-keyboard-response",
-    stimulus: "<p>Instructions go here.</p>",
+    stimulus: "<p>In this game, you are trying to win as many points as possible. You get to choose between two wheels of fortune. After you choose a wheel, you'll see an arrow spinning. When the spinning arrow stops, points will be added or subtracted from your running total. You will then be asked to record how you feel about the outcome.</p>",
     post_trial_gap: 500
   };
   //timeline.push(instructions);
@@ -67,8 +67,8 @@
     clear_screen: false,
     post_trial_gap: 1000
   }
-  
-  
+
+
   var slider_sad = {
     type: 'wof-slider-response',
     labels: ['not at all sad', 'very sad'],
@@ -76,9 +76,38 @@
     post_trial_gap: 1000
   }
 
+  var slider_relieved = {
+    type: 'wof-slider-response',
+    labels: ['not at all relieved', 'very relieved'],
+    clear_screen: false,
+    post_trial_gap: 1000
+  }
+
+  var slider_regretful = {
+    type: 'wof-slider-response',
+    labels: ['not at all regretful', 'very regretful'],
+    clear_screen: false,
+    post_trial_gap: 1000
+  }
+
+  var slider_satisfied = {
+    type: 'wof-slider-response',
+    labels: ['not at all satisfied', 'very satisfied'],
+    clear_screen: false,
+    post_trial_gap: 1000
+  }
+
+  var slider_disappointed = {
+    type: 'wof-slider-response',
+    labels: ['not at all disappointed', 'very disappointed'],
+    clear_screen: false,
+    post_trial_gap: 1000
+  }
+
+
 
   var test_procedure = {
-    timeline: [trial, slider_happy, slider_sad],
+    timeline: [trial, slider_happy, slider_sad, slider_relieved, slider_regretful, slider_satisfied, slider_disappointed],
     timeline_variables: trial_list,
     randomize_order: true,
     sample: {
