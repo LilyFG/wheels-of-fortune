@@ -15,7 +15,7 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
     parameters: {
       prompt: {
         type: jsPsych.plugins.parameterType.STRING, // BOOL, STRING, INT, FLOAT, FUNCTION, KEYCODE, SELECT, HTML_STRING, IMAGE, AUDIO, VIDEO, OBJECT, COMPLEX
-        default: "Choose a wheel"
+        default: "Use your mouse to choose a wheel"
       },
       trial_type: {
         type: jsPsych.plugins.parameterType.STRING, // BOOL, STRING, INT, FLOAT, FUNCTION, KEYCODE, SELECT, HTML_STRING, IMAGE, AUDIO, VIDEO, OBJECT, COMPLEX
@@ -126,7 +126,7 @@ jsPsych.plugins["wof-choose-spin"] = (function() {
           rt: null,
           button: null
         };
-    
+
         // store rotation angles
         var rotate1 = null;
         var rotate2 = null;

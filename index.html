@@ -37,6 +37,13 @@
   };
   //timeline.push(welcome_block);
 
+  /* define ready message trial */
+  var ready_block = {
+    type: "html-keyboard-response",
+    stimulus: "Great! Now you're ready for the real thing. Press any key to begin."
+  };
+  //timeline.push(ready_block);
+
   /* define instructions trial */
   var instructions = {
     type: "html-keyboard-response",
@@ -117,7 +124,7 @@
   timeline.push(prac_procedure);
 
   var test_procedure = {
-    timeline: [welcome_block, instructions, trial, slider_happy, slider_sad, slider_relieved, slider_regretful, slider_satisfied, slider_disappointed],
+    timeline: [ready_block, trial, slider_happy, slider_sad, slider_relieved, slider_regretful, slider_satisfied, slider_disappointed],
     timeline_variables: trial_list,
     randomize_order: true,
     sample: {
