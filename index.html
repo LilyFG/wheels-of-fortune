@@ -58,14 +58,30 @@
     right_value_2: jsPsych.timelineVariable('right_value_2'),
     right_prob_1: jsPsych.timelineVariable('right_prob_1'),
     right_outcome: jsPsych.timelineVariable('right_outcome'),
-    post_trial_gap: 1000
+    post_trial_gap: 1000,
+    data: {
+      // save all these variables
+      trial_type: jsPsych.timelineVariable('trial_type'),
+      left_value_1: jsPsych.timelineVariable('left_value_1'),
+      left_value_2: jsPsych.timelineVariable('left_value_2'),
+      left_prob_1: jsPsych.timelineVariable('left_prob_1'),
+      left_outcome: jsPsych.timelineVariable('left_outcome'),
+      trial_type: jsPsych.timelineVariable('trial_type'),
+      right_value_1: jsPsych.timelineVariable('right_value_1'),
+      right_value_2: jsPsych.timelineVariable('right_value_2'),
+      right_prob_1: jsPsych.timelineVariable('right_prob_1'),
+      right_outcome: jsPsych.timelineVariable('right_outcome'),
+    }
   }
 
   var slider_happy = {
     type: 'wof-slider-response',
     labels: ['not at all happy', 'very happy'],
     clear_screen: false,
-    post_trial_gap: 1000
+    post_trial_gap: 1000,
+    data: {
+      emotion: "happy"
+    }
   }
   
   
@@ -73,7 +89,10 @@
     type: 'wof-slider-response',
     labels: ['not at all sad', 'very sad'],
     clear_screen: true,
-    post_trial_gap: 1000
+    post_trial_gap: 1000,
+    data: {
+      emotion: "sad"
+    }
   }
 
 
